@@ -57,6 +57,7 @@ Two hierarchical partitions can be created, and compared with the hierarchical m
     >>> 
     >>> from hierpart import HierarchicalPartition
     >>> from hierpart import hierarchical_mutual_information
+    >>> from hierpart import normalized_hierarchical_mutual_information
     >>> # Lets create a HierarchicalPartition called "x"
     >>> hpx=HierarchicalPartition(['a','b','c','d','e','f'])
     >>> rootx=hpx.root()
