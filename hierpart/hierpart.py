@@ -46,19 +46,19 @@ class HierarchicalPartition:
     >>> # All the following lines of code are here for the doctest.
     >>> # However, these extra lines of code are also useful for learning purposes.
     >>> root=hp.root()
-    >>> print root
+    >>> print(root)
     0
-    >>> print hp.node_elements(root)
+    >>> print(hp.node_elements(root))
     ['a', 'b', 'c', 'd', 'e', 'f']
     >>> n1=hp.add_child(root,['a','b','c'])
     >>> n2=hp.add_child(root,['d','e','f'])
-    >>> print n1
+    >>> print(n1)
     1
-    >>> print n2
+    >>> print(n2)
     2
-    >>> print hp.node_elements(n1)
+    >>> print(hp.node_elements(n1))
     ['a', 'b', 'c']
-    >>> print hp.node_elements(n2)
+    >>> print(hp.node_elements(n2))
     ['d', 'e', 'f']
     >>> hp.add_child(n1,['a'])
     3
@@ -68,10 +68,10 @@ class HierarchicalPartition:
     >>> hp.add_child(n3,['c'])
     6
     >>> tree=hp.tree()
-    >>> print tree.edges()
+    >>> print(tree.edges())
     [(0, 1), (0, 2), (1, 3), (1, 4), (4, 5), (4, 6)]
     >>> for node in hp.nodes():
-    ...     print node, hp.node_elements(node)
+    ...     print(node, hp.node_elements(node))
     ...     
     0 ['a', 'b', 'c', 'd', 'e', 'f']
     1 ['a', 'b', 'c']
@@ -113,7 +113,7 @@ class HierarchicalPartition:
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
         >>> tree=hp.tree()
-        >>> print tree.edges()
+        >>> print(tree.edges())
         [(0, 1), (0, 2), (1, 3), (1, 4), (4, 5), (4, 6)]
         """
         return self._tree
@@ -168,16 +168,16 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_elements(root)
+        >>> print(hp.node_elements(root))
         ['a', 'b', 'c', 'd', 'e', 'f']
-        >>> print hp.node_elements(n1)
+        >>> print(hp.node_elements(n1))
         ['a', 'b', 'c']
         """
         try:
             return self._node_elements[node]
         except:
-            print 'CRASH INFO:'
-            print 'NODE =',node
+            print('CRASH INFO:')
+            print('NODE =',node)
             assert False, 'ERROR node_elements(): node NODE is not a member of the HierarchicalPartition.'
 
     def node_size(self,node):
@@ -204,13 +204,13 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_size(root)
+        >>> print(hp.node_size(root))
         6
-        >>> print hp.node_size(n1)
+        >>> print(hp.node_size(n1))
         3
-        >>> print hp.node_size(n2)
+        >>> print(hp.node_size(n2))
         3
-        >>> print hp.node_size(n3)
+        >>> print(hp.node_size(n3))
         2
         """
         return len(self.node_elements(node))
@@ -239,14 +239,14 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_parent(n3)==n1
+        >>> print(hp.node_parent(n3)==n1)
         True
-        >>> print hp.node_parent(n3)==n2
+        >>> print(hp.node_parent(n3)==n2)
         False
-        >>> print hp.node_parent(root)==None
+        >>> print(hp.node_parent(root)==None)
         True
         """
-        _in_edges=self._tree.in_edges(node)
+        _in_edges=list(self._tree.in_edges(node, data=True))
         if len(_in_edges)==0: # The node has no parent, then it should be the root
             assert node==self.root(),'ERROR in node parent(): Node "node" has no parent but it is not the root.'
             return None
@@ -278,7 +278,7 @@ class HierarchicalPartition:
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
         >>> for child in hp.node_children(root):
-        ...     print child
+        ...     print(child)
         ...
         1
         2
@@ -310,11 +310,11 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_depth(root)
+        >>> print(hp.node_depth(root))
         0
-        >>> print hp.node_depth(n1)
+        >>> print(hp.node_depth(n1))
         1
-        >>> print hp.node_depth(n3)
+        >>> print(hp.node_depth(n3))
         2
         """
         return self._node_depth[node]
@@ -343,11 +343,11 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_branching_factor(root) 
+        >>> print(hp.node_branching_factor(root)) 
         2
-        >>> print hp.node_branching_factor(n1) 
+        >>> print(hp.node_branching_factor(n1))
         2
-        >>> print hp.node_branching_factor(n2) 
+        >>> print(hp.node_branching_factor(n2))
         0
         """
         return self._tree.out_degree(node)
@@ -376,11 +376,11 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.node_leaf(root) 
+        >>> print(hp.node_leaf(root))
         False
-        >>> print hp.node_leaf(n1) 
+        >>> print(hp.node_leaf(n1))
         False
-        >>> print hp.node_leaf(n2) 
+        >>> print(hp.node_leaf(n2))
         True
         """
         return self.node_branching_factor(node)==0
@@ -409,7 +409,7 @@ class HierarchicalPartition:
         >>> hp=HierarchicalPartition(['a','b','c','d','e','f'])
         >>> root=hp.root()
         >>> n1=hp.add_child(root,['a','b','c']) # This line is to show that it doesn't count
-        >>> print hp.all_elements()
+        >>> print(hp.all_elements())
         ['a', 'b', 'c', 'd', 'e', 'f']
         """
         return self.node_elements(self.root())
@@ -428,7 +428,7 @@ class HierarchicalPartition:
         >>> hp=HierarchicalPartition(['a','b','c','d','e','f'])
         >>> root=hp.root()
         >>> n1=hp.add_child(root,['a','b','c']) # This line is to show that it doesn't count
-        >>> print hp.total_num_elements()
+        >>> print(hp.total_num_elements())
         6
         """      
         return self.node_size(self.root())
@@ -452,7 +452,7 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c']) # n3 has depth 2.
         >>> dummy=hp.add_child(n3,['b']) # These children of n3 have depth 3.
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.max_depth()
+        >>> print(hp.max_depth())
         3
         """
         return max([self.node_depth(node) for node in self.nodes()])
@@ -483,8 +483,8 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.depths_basic_stats()
-        (2.25, 1.0, 3.0, 0.82915619758884995, 4)
+        >>> print(hp.depths_basic_stats())
+        (2.25, 1.0, 3.0, 0.82915619758885, 4)
         """
         return _basic_stats([self.node_depth(node) for node in self.leaves()])
 
@@ -538,9 +538,9 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.branching_factors()
+        >>> print(hp.branching_factors())
         [2, 2, 2]
-        >>> print hp.branching_factors(no_leaves=False)
+        >>> print(hp.branching_factors(no_leaves=False))
         [2, 2, 0, 0, 2, 0, 0]
         """
         if no_leaves:
@@ -578,9 +578,9 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.branching_factors_basic_stats()
+        >>> print(hp.branching_factors_basic_stats())
         (2.0, 2.0, 2.0, 0.0, 3)
-        >>> print hp.branching_factors_basic_stats(no_leaves=False)
+        >>> print(hp.branching_factors_basic_stats(no_leaves=False))
         (0.8571428571428571, 0.0, 2.0, 0.9897433186107869, 7)
         """
         return _basic_stats(self.branching_factors(no_leaves=no_leaves))
@@ -609,7 +609,7 @@ class HierarchicalPartition:
         >>> hp=HierarchicalPartition(['a','b','c','d','e','f'])
         >>> root=hp.root()
         >>> n1=hp.add_child(root,['a','b','c'])
-        >>> print hp.node_elements(n1)
+        >>> print(hp.node_elements(n1))
         ['a', 'b', 'c']
         """
         self._N+=1
@@ -621,8 +621,8 @@ class HierarchicalPartition:
             try:
                 assert set(child_elements) <= set(self.node_elements(parent)), 'ERROR in add_child: the "elements" in the child is not a subset of the "elements" in the parent.'
             except:
-                print '# child_elements',child_elements
-                print '# parent_elements',self.node_elements(parent)
+                print('# child_elements',child_elements)
+                print('# parent_elements',self.node_elements(parent))
                 assert False
         self._node_elements[new_child]=child_elements
         self._node_depth[new_child]=self._node_depth[parent]+1
@@ -681,7 +681,7 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print [node for node in hp]
+        >>> print([node for node in hp])
         [0, 1, 2, 4, 3, 5, 6]
         """
         for dummy,node in sorted([ (self.node_size(node),node) for node in self._tree ],key=itemgetter(0),reverse=True):
@@ -702,7 +702,7 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print [node for node in hp.bfs_traversal()]
+        >>> print([node for node in hp.bfs_traversal()])
         [0, 1, 2, 3, 4, 5, 6]
         """
         yield self.root()
@@ -729,7 +729,7 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print [node for node in hp.dfs_traversal()]
+        >>> print([node for node in hp.dfs_traversal()])
         [0, 2, 1, 4, 6, 5, 3]
         """
         stack=[self.root()]
@@ -762,7 +762,7 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
-        >>> print hp.edges()
+        >>> print(hp.edges())
         [(0, 1), (0, 2), (1, 3), (1, 4), (4, 5), (4, 6)]
         """
         return self._tree.edges()
@@ -770,7 +770,7 @@ class HierarchicalPartition:
     def show(self):
         """Shows in the screen a list of the nodes, and their respective elements."""
         for node in self.bfs_traversal():
-            print node,self.node_elements(node)
+            print(node,self.node_elements(node))
 
     def copy(self):
         """Copy the current <HierarchicalPartition> object into a new <HierarchicalPartition> object.
@@ -792,9 +792,9 @@ class HierarchicalPartition:
         >>> dummy=hp.add_child(n3,['b'])
         >>> dummy=hp.add_child(n3,['c'])
         >>> hpc=hp.copy()
-        >>> print hpc.nodes()        
+        >>> print(hpc.nodes())     
         [0, 1, 2, 3, 4, 5, 6]
-        >>> print hpc.edges()
+        >>> print(hpc.edges())
         [(0, 1), (0, 2), (1, 3), (1, 4), (4, 5), (4, 6)]
         >>> for node in hpc.nodes(): assert hpc.node_elements(node)==hp.node_elements(node)
         """
@@ -841,10 +841,10 @@ class HierarchicalPartition:
         >>> dummy=hp.add_child(n3,['c'])
         >>> old_elements_2_new_elements={'a':'A', 'b':'B', 'c':'C', 'd':'D', 'e':'E', 'f':'F'}
         >>> hpr=hp.replica(old_elements_2_new_elements)
-        >>> print hpr.all_elements()
+        >>> print(hpr.all_elements())
         ['A', 'B', 'C', 'D', 'E', 'F']
         >>> for node in hpr.nodes():
-        ...    print node, hpr.node_elements(node)
+        ...    print(node, hpr.node_elements(node))
         ...
         0 ['A', 'B', 'C', 'D', 'E', 'F']
         1 ['A', 'B', 'C']
@@ -901,10 +901,10 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy2=hp.add_child(n3,['b'])
         >>> dummy3=hp.add_child(n3,['c'])
-        >>> print root, n1, n2, n3, dummy1, dummy2, dummy3
+        >>> print(root, n1, n2, n3, dummy1, dummy2, dummy3)
         0 1 2 4 3 5 6
         >>> for node in hp.nodes():
-        ...     print node, hp.node_depth(node)
+        ...     print(node, hp.node_depth(node))
         ...
         0 0
         1 1
@@ -913,7 +913,7 @@ class HierarchicalPartition:
         4 2
         5 3
         6 3
-        >>> print hp.nodes_at_depth(0)
+        >>> print(hp.nodes_at_depth(0))
         [0]
         >>> hp.nodes_at_depth(1)
         [1, 2]
@@ -952,9 +952,9 @@ class HierarchicalPartition:
         >>> n3=hp.add_child(n1,['b','c'])
         >>> dummy2=hp.add_child(n3,['b'])
         >>> dummy3=hp.add_child(n3,['c'])
-        >>> print [hp.node_children_avrg_size(node) for node in hp.nodes()]
+        >>> print([hp.node_children_avrg_size(node) for node in hp.nodes()])
         [3.0, 1.6666666666666665, 0.0, 0.0, 1.0, 0.0, 0.0]
-        >>> print [hp.node_children_avrg_size(node,weighted=False) for node in hp.nodes()]
+        >>> print([hp.node_children_avrg_size(node,weighted=False) for node in hp.nodes()])
         [3.0, 1.5, 0.0, 0.0, 1.0, 0.0, 0.0]
         """
         sum_children_size=0.0
@@ -1005,14 +1005,14 @@ def save_hierarchical_partition(hier_part,fileout=None,fhw=None):
             for d in xrange(depth):
                 path+=sep+str(count_vs_depth[d+1]-1)
                 sep=','
-            print >>fhw,path,
+            print(path, file=fhw),
             elements=''
             sep=''
             for element in hier_part.node_elements(node):
                 assert '"' not in element,'ERROR: the double quotation mark " cannot be part of an element name for saving.'
                 elements+=sep+'"'+str(element)+'"'
                 sep=','
-            print >>fhw,elements
+            print(elements, file=fhw)
     if fileout is not None:
         fhw.close()
 
@@ -1148,9 +1148,9 @@ def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,dept
     >>> dummy=hpy.add_child(n3y,['d'])
     >>> dummy=hpy.add_child(n3y,['e'])
     >>> # Now lets compare sub-trees.
-    >>> print sub_hierarchical_mutual_information(hpx,hpy,rootx,rooty,0)
-    0.69314718056
-    >>> print sub_hierarchical_mutual_information(hpx,hpy,n1x,n1y,1)
+    >>> print(sub_hierarchical_mutual_information(hpx,hpy,rootx,rooty,0))
+    0.6931471805599453
+    >>> print(sub_hierarchical_mutual_information(hpx,hpy,n1x,n1y,1))
     0.0
     """
     wx=hierpart_x.node_elements(node_x)
@@ -1162,10 +1162,10 @@ def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,dept
         return 0.0
 
     if show:
-        print '# elements(node_x)',hierpart_x.node_elements(node_x)
-        print '# elements(node_y)',hierpart_y.node_elements(node_y)
-        print '# partition(node_x)',_node_communities(hierpart_x,node_x)
-        print '# partition(node_y)',_node_communities(hierpart_y,node_y)
+        print('# elements(node_x)',hierpart_x.node_elements(node_x))
+        print('# elements(node_y)',hierpart_y.node_elements(node_y))
+        print('# partition(node_x)',_node_communities(hierpart_x,node_x))
+        print('# partition(node_y)',_node_communities(hierpart_y,node_y))
 
     # Compute Sx
     Sx=0.0
@@ -1204,12 +1204,12 @@ def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,dept
     ret_val=one_step+second_term_xy
 
     if show:
-        print '# Sx',Sx
-        print '# Sy',Sy
-        print '# Sxy',Sxy
-        print '# Sx+Sy-Sxy',one_step # Sx+Sy-Sxy
-        print '# second_term_xy',second_term_xy
-        print '# ret_val',ret_val
+        print('# Sx',Sx)
+        print('# Sy',Sy)
+        print('# Sxy',Sxy)
+        print('# Sx+Sy-Sxy',one_step) # Sx+Sy-Sxy
+        print('# second_term_xy',second_term_xy)
+        print('# ret_val',ret_val)
 
     return ret_val
 
@@ -1272,12 +1272,12 @@ def hierarchical_mutual_information(hierpart_x,hierpart_y,show=False):
     5 ['d']
     6 ['e']
     >>> # Now we compare the hierarchies with themselves, and against each other.
-    >>> print hierarchical_mutual_information(hpx,hpx)
-    1.24245332489
-    >>> print hierarchical_mutual_information(hpy,hpy)
-    1.24245332489
-    >>> print hierarchical_mutual_information(hpx,hpy)
-    0.69314718056
+    >>> print(hierarchical_mutual_information(hpx,hpx))
+    1.242453324894
+    >>> print(hierarchical_mutual_information(hpy,hpy))
+    1.242453324894
+    >>> print(hierarchical_mutual_information(hpx,hpy))
+    0.6931471805599453
     """
     assert isinstance(hierpart_x,HierarchicalPartition)
     assert isinstance(hierpart_y,HierarchicalPartition)
@@ -1345,18 +1345,18 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
     5 ['d']
     6 ['e']
     >>> # Now we compare the hierarchies with themselves, and against each other.
-    >>> print normalized_hierarchical_mutual_information(hpx,hpx)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpx))
     (1.0, 1.242453324894, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpy,hpy)
+    >>> print(normalized_hierarchical_mutual_information(hpy,hpy))
     (1.0, 1.242453324894, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy)
-    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
-    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='add')
-    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='max')
-    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy))
+    (0.5578858913022597, 0.6931471805599453, 1.242453324894, 1.242453324894)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='CS'))
+    (0.5578858913022597, 0.6931471805599453, 1.242453324894, 1.242453324894)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='add'))
+    (0.5578858913022597, 0.6931471805599453, 1.242453324894, 1.242453324894)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='max'))
+    (0.5578858913022597, 0.6931471805599453, 1.242453324894, 1.242453324894)
     >>>
     >>> hpy=HierarchicalPartition(['a','b','c','d','e','f'])
     >>> rooty=hpy.root()
@@ -1370,13 +1370,13 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
     >>> n4y=hpy.add_child(n2y,['e','f'])
     >>> dummy=hpy.add_child(n4y,['e'])
     >>> dummy=hpy.add_child(n4y,['f'])
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy)
-    (0.83272228480884947, 1.242453324894, 1.242453324894, 1.791759469228055)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
-    (0.83272228480884947, 1.242453324894, 1.242453324894, 1.791759469228055)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='add')
-    (0.81896255088035252, 1.242453324894, 1.242453324894, 1.791759469228055)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='max')
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy))
+    (0.8327222848088495, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='CS'))
+    (0.8327222848088495, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='add'))
+    (0.8189625508803525, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy,norm='max'))
     (0.6934264036172707, 1.242453324894, 1.242453324894, 1.791759469228055)
     """
     HMI_xx=hierarchical_mutual_information(hierpart_x,hierpart_x,show=False)    
@@ -1387,11 +1387,11 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
         _prod=HMI_xx*HMI_yy
         if _prod>0.0:
 
-#            print '# HMI_xy',HMI_xy
-#            print '# HMI_xx',HMI_xx
-#            print '# HMI_yy',HMI_yy
-#            print '# _prod',_prod
-#            print '# HMI_xy/(_prod**0.5)',repr(HMI_xy/(_prod**0.5))
+#            print('# HMI_xy',HMI_xy)
+#            print('# HMI_xx',HMI_xx)
+#            print('# HMI_yy',HMI_yy)
+#            print('# _prod',_prod)
+#            print('# HMI_xy/(_prod**0.5)',repr(HMI_xy/(_prod**0.5)))
 
             return HMI_xy/(_prod**0.5),HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
@@ -1399,11 +1399,11 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
         _suma=HMI_xx+HMI_yy
         if _suma>0.0:
 
-#            print '# HMI_xy',HMI_xy
-#            print '# HMI_xx',HMI_xx
-#            print '# HMI_yy',HMI_yy
-#            print '# _suma',_suma
-#            print '# 2.0*HMI_xy/_suma',repr(2.0*HMI_xy/_suma)
+#            print('# HMI_xy',HMI_xy)
+#            print('# HMI_xx',HMI_xx)
+#            print('# HMI_yy',HMI_yy)
+#            print('# _suma',_suma)
+#            print('# 2.0*HMI_xy/_suma',repr(2.0*HMI_xy/_suma))
 
             return 2.0*HMI_xy/_suma,HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
@@ -1411,11 +1411,11 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
         _max=max(HMI_xx,HMI_yy)
         if _max>0.0:
 
-#            print '# HMI_xy',HMI_xy
-#            print '# HMI_xx',HMI_xx
-#            print '# HMI_yy',HMI_yy
-#            print '# _max',_max
-#            print '# HMI_xy/_max',repr(HMI_xy/_max)
+#            print('# HMI_xy',HMI_xy)
+#            print('# HMI_xx',HMI_xx)
+#            print('# HMI_yy',HMI_yy)
+#            print('# _max',_max)
+#            print('# HMI_xy/_max',repr(HMI_xy/_max))
 
             return HMI_xy/_max,HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
@@ -1450,12 +1450,12 @@ def example_fig1b1c():
     # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
     # partition(node_x) a,b,c;d,e,f
     # partition(node_y) a;b,c;d,e,f
-    # Sx 0.69314718056
-    # Sy 1.01140426471
-    # Sxy 1.01140426471
-    # Sx+Sy-Sxy 0.69314718056
+    # Sx 0.6931471805599453
+    # Sy 1.0114042647073518
+    # Sxy 1.0114042647073518
+    # Sx+Sy-Sxy 0.6931471805599454
     # second_term_xy 0.0
-    # ret_val 0.69314718056
+    # ret_val 0.6931471805599454
     0.6931471805599454
     >>>
     >>> del hpx
@@ -1490,12 +1490,12 @@ def example_fig1b1c():
     # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
     # partition(node_x) a,b,c;d,e,f
     # partition(node_y) a;b,c;d,e,f
-    # Sx 0.69314718056
-    # Sy 1.01140426471
-    # Sxy 1.01140426471
-    # Sx+Sy-Sxy 0.69314718056
+    # Sx 0.6931471805599453
+    # Sy 1.0114042647073518
+    # Sxy 1.0114042647073518
+    # Sx+Sy-Sxy 0.6931471805599454
     # second_term_xy 0.0
-    # ret_val 0.69314718056
+    # ret_val 0.6931471805599454
     0.6931471805599454
     >>>
     >>> # Third check; to compute:
@@ -1507,12 +1507,12 @@ def example_fig1b1c():
     # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
     # partition(node_x) a,b,c;d,e,f
     # partition(node_y) a,b,c;d,e,f
-    # Sx 0.69314718056
-    # Sy 0.69314718056
-    # Sxy 0.69314718056
-    # Sx+Sy-Sxy 0.69314718056
-    # second_term_xy 0.318257084147
-    # ret_val 1.01140426471
+    # Sx 0.6931471805599453
+    # Sy 0.6931471805599453
+    # Sxy 0.6931471805599453
+    # Sx+Sy-Sxy 0.6931471805599453
+    # second_term_xy 0.3182570841474064
+    # ret_val 1.0114042647073518
     1.0114042647073518
     >>>
     >>> # Fourth check; to compute:
@@ -1524,24 +1524,24 @@ def example_fig1b1c():
     # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
     # partition(node_x) a;b,c;d,e,f
     # partition(node_y) a;b,c;d,e,f
-    # Sx 1.01140426471
-    # Sy 1.01140426471
-    # Sxy 1.01140426471
-    # Sx+Sy-Sxy 1.01140426471
+    # Sx 1.0114042647073518
+    # Sy 1.0114042647073518
+    # Sxy 1.0114042647073518
+    # Sx+Sy-Sxy 1.0114042647073518
     # second_term_xy 0.0
-    # ret_val 1.01140426471
+    # ret_val 1.0114042647073518
     1.0114042647073518
     >>>
     >>> # Fifth check; to compute:
     >>> # i(T;T') = 0.685...
     >>>
     >>> normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
-    (0.68533147896158653, 0.6931471805599454, 1.0114042647073518, 1.0114042647073518)
+    (0.6853314789615865, 0.6931471805599454, 1.0114042647073518, 1.0114042647073518)
     >>> # Remember, this means i(T;T'), I(T;T'), I(T;T), I(T';T')
     """
 
 if __name__=='__main__':
     import doctest
-    print 'doctesting hierpart...'
+    print('doctesting hierpart...')
     doctest.testmod()
-    print 'hierpart doctest success.'
+    print('hierpart doctest success.')
