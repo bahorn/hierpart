@@ -8,4 +8,8 @@ setup(name='hierpart',
       author_email='juanpool at gmail.com',
       license='GPL-2.0',
       packages=['hierpart'],
-      zip_safe=False)
+      zip_safe=False,
+      install_requires=[
+        'numpy>=1.18.0',
+        'networkx>=2.5'
+      ])
