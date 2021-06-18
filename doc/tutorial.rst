@@ -93,18 +93,18 @@ Two hierarchical partitions can be created, and compared with the hierarchical m
     5 ['d']
     6 ['e']
     >>> # Now we compare the hierarchies with themselves, and against each other, using the hierarchical mutual information
-    >>> print hierarchical_mutual_information(hpx,hpx)
+    >>> print(hierarchical_mutual_information(hpx,hpx))
     1.24245332489
-    >>> print hierarchical_mutual_information(hpy,hpy)
+    >>> print(hierarchical_mutual_information(hpy,hpy))
     1.24245332489
-    >>> print hierarchical_mutual_information(hpx,hpy)
+    >>> print(hierarchical_mutual_information(hpx,hpy))
     0.69314718056
     >>> # Now we repeat using the normalized hierarchical mutual information
-    >>> print normalized_hierarchical_mutual_information(hpx,hpx)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpx))
     (1.0, 1.242453324894, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpy,hpy)
+    >>> print(normalized_hierarchical_mutual_information(hpy,hpy))
     (1.0, 1.242453324894, 1.242453324894, 1.242453324894)
-    >>> print normalized_hierarchical_mutual_information(hpx,hpy)
+    >>> print(normalized_hierarchical_mutual_information(hpx,hpy))
     (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
 
 ..
